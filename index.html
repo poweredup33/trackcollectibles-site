@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrackCollectibles — Know What Your Collection Is Worth</title>
+<meta name="description" content="TrackCollectibles is a stock-trading platform for your collectibles. Scan any item, get live market values, and generate ready-to-list eBay listings with AI. Comics, cards, coins, vinyl, toys, and more.">
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; connect-src 'self' https://formspree.io; base-uri 'self'; form-action 'self' https://formspree.io; frame-ancestors 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#14161F">
+<link rel="canonical" href="https://trackcollectibles.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TrackCollectibles">
+<meta property="og:title" content="TrackCollectibles — Know What Your Collection Is Worth">
+<meta property="og:description" content="A stock-trading platform for your collectibles. Scan, value, and list with AI.">
+<meta property="og:url" content="https://trackcollectibles.com/">
+<meta property="og:image" content="https://trackcollectibles.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TrackCollectibles — Know What Your Collection Is Worth">
+<meta name="twitter:description" content="A stock-trading platform for your collectibles. Scan, value, and list with AI.">
+<meta name="twitter:image" content="https://trackcollectibles.com/og-image.png">
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script src="app.js" defer></script>
+
+<style>
+@font-face{
+  font-family:"Fraunces";
+  src:url("fonts/fraunces-latin-full-normal.woff2") format("woff2-variations");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+:root{
+  --ink:#14161F; --ink-2:#1B1E29; --panel:#20232F;
+  --gold-a:#C9962F; --gold-b:#8A5E1C; --gold-core:#E8C877;
+  --gold-text:#CB9A33; --offwhite:#F5F3EC; --muted:#9A9EAC; --line:#2A2E3C;
+  --up:#5DCAA5; --dn:#F09595;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);color:var(--offwhite);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+::selection{background:rgba(201,150,47,.35)}
+
+/* type utilities */
+.smallcaps{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
+.lotno{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--gold-text)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.up{color:var(--up)}
+.dn{color:var(--dn)}
+
+.btn{
+  display:inline-block;padding:14px 30px;font-weight:600;font-size:15px;
+  background:var(--gold-a);color:var(--ink);
+  border:1px solid var(--gold-a);cursor:pointer;font-family:inherit;border-radius:2px;
+  letter-spacing:.3px;transition:background .15s,color .15s;white-space:nowrap;
+}
+.btn:hover{background:var(--gold-core);border-color:var(--gold-core)}
+.btn-ghost{background:transparent;color:var(--offwhite);border:1px solid var(--line)}
+.btn-ghost:hover{background:transparent;border-color:var(--gold-a);color:var(--gold-core)}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+  .ticker-track{animation:none !important}
+  .live-dot{animation:none !important}
+  .cursor{animation:none !important}
+}
+
+/* ── TICKER ── */
+.ticker{overflow:hidden;border-bottom:1px solid var(--line);background:var(--ink-2);user-select:none}
+.ticker-track{display:flex;width:max-content;animation:tick 46s linear infinite}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-group{display:flex;align-items:center;padding:9px 0;font-family:var(--mono);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+.ticker-group span{padding:0 28px;white-space:nowrap}
+.ticker-group .t-gold{color:var(--gold-text)}
+.ticker-group .t-sep{color:var(--line);padding:0}
+
+/* ── NAV ── */
+header{position:sticky;top:0;z-index:50;background:rgba(20,22,31,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:600;letter-spacing:-.3px}
+.brand .word span{color:var(--gold-text);font-weight:400}
+.nav-links{display:flex;gap:30px;font-family:var(--mono);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.nav-links a:hover{color:var(--gold-core)}
+@media(max-width:760px){.nav-links{display:none}}
+.btn.nav-cta{padding:9px 18px;font-size:13px}
+
+/* ── HERO ── */
+.hero{padding:84px 0 0;border-bottom:1px solid var(--line)}
+.hero-rule{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:48px;flex-wrap:wrap;gap:8px}
+.live-dot{display:inline-block;width:7px;height:7px;background:var(--gold-core);border-radius:50%;margin-right:8px;vertical-align:1px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{
+  font-family:var(--serif);font-weight:480;
+  font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 0;
+  font-size:clamp(42px,7.2vw,92px);line-height:1.02;letter-spacing:-1.5px;
+  max-width:980px;margin-bottom:30px;
+}
+.hero h1 .wonk{font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 1;font-style:italic;font-weight:540;color:var(--gold-core)}
+.hero-sub{display:grid;grid-template-columns:minmax(0,560px) 1fr;gap:40px;align-items:end;margin-bottom:52px}
+@media(max-width:820px){.hero-sub{grid-template-columns:1fr}}
+.hero-sub p{font-size:clamp(16px,1.9vw,18px);color:var(--muted);line-height:1.7}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:820px){.hero-cta{justify-content:flex-start}}
+
+/* market board */
+.board{border:1px solid var(--line);border-bottom:none;background:var(--ink-2)}
+.board-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.board-head .bh-l{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--offwhite)}
+.board-head .bh-r{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--gold-text);text-transform:uppercase}
+.board-scroll{overflow-x:auto}
+table.mkt{width:100%;border-collapse:collapse;font-family:var(--mono);font-variant-numeric:tabular-nums;min-width:640px}
+.mkt th{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:11px 20px;border-bottom:1px solid var(--line)}
+.mkt th.r,.mkt td.r{text-align:right}
+.mkt td{font-size:13.5px;padding:13px 20px;border-bottom:1px solid var(--line);white-space:nowrap}
+.mkt tr:last-child td{border-bottom:none}
+.mkt .item{color:var(--offwhite);font-weight:600}
+.mkt .cat{color:var(--muted);font-size:12px}
+.mkt .grade{color:var(--muted);font-size:12px}
+.mkt .px{color:var(--gold-core);font-weight:600}
+.mkt .spark{padding-top:8px;padding-bottom:8px}
+.board-foot{padding:10px 20px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.8px;color:var(--muted)}
+.cursor{display:inline-block;width:7px;height:13px;background:var(--gold-core);vertical-align:-2px;margin-left:6px;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* stat strip */
+.statstrip{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-top:none;margin-bottom:0}
+.statstrip>div{padding:20px 24px;border-right:1px solid var(--line)}
+.statstrip>div:last-child{border-right:none}
+.statstrip b{display:block;font-family:var(--serif);font-variation-settings:"opsz" 72;font-weight:560;font-size:30px;letter-spacing:-.5px;line-height:1.1}
+.statstrip small{font-family:var(--mono);font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+@media(max-width:560px){.statstrip{grid-template-columns:1fr}.statstrip>div{border-right:none;border-bottom:1px solid var(--line)}.statstrip>div:last-child{border-bottom:none}}
+
+/* ── SECTIONS ── */
+.section{padding:88px 0}
+.sec-rule{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:54px;gap:10px;flex-wrap:wrap}
+h2.sec{font-family:var(--serif);font-weight:520;font-variation-settings:"opsz" 90,"SOFT" 0,"WONK" 0;font-size:clamp(30px,4.2vw,52px);letter-spacing:-.8px;line-height:1.05}
+.sec .wonk{font-variation-settings:"opsz" 90,"WONK" 1;font-style:italic;color:var(--gold-core)}
+.lead{color:var(--muted);max-width:600px;font-size:16.5px;line-height:1.7;margin:-30px 0 54px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{padding:30px 28px 6px 0;border-top:2px solid transparent;margin-top:-1px}
+@media(max-width:760px){.step{border-bottom:1px solid var(--line);padding-bottom:28px}}
+.step .num{font-family:var(--serif);font-variation-settings:"opsz" 144,"WONK" 1;font-style:italic;font-weight:500;font-size:54px;color:var(--gold-text);line-height:1;display:block;margin-bottom:18px}
+.step h3{font-size:18px;letter-spacing:-.2px;margin-bottom:10px}
+.step p{color:var(--muted);font-size:15px;line-height:1.65}
+
+/* spec sheet */
+.spec{border-top:1px solid var(--line)}
+.spec-row{display:grid;grid-template-columns:280px 1fr;gap:32px;padding:26px 0;border-bottom:1px solid var(--line)}
+@media(max-width:700px){.spec-row{grid-template-columns:1fr;gap:8px;padding:22px 0}}
+.spec-row dt{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-text);padding-top:3px}
+.spec-row dd{color:var(--muted);font-size:15.5px;line-height:1.7;max-width:640px}
+.spec-row dd b{color:var(--offwhite);font-weight:600}
+
+/* index / categories */
+.index{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line)}
+@media(max-width:640px){.index{grid-template-columns:1fr}}
+.ix{display:flex;align-items:baseline;gap:18px;padding:20px 8px 20px 0;border-bottom:1px solid var(--line)}
+.ix .n{font-family:var(--mono);font-size:12px;color:var(--gold-text);letter-spacing:1px;flex-shrink:0}
+.ix .name{font-family:var(--serif);font-variation-settings:"opsz" 60;font-weight:500;font-size:clamp(20px,2.6vw,27px);letter-spacing:-.3px}
+.ix .note{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-left:auto;text-align:right}
+
+/* rate card */
+.rates{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
+@media(max-width:860px){.rates{grid-template-columns:1fr}}
+.rate{padding:30px 28px;border-right:1px solid var(--line);display:flex;flex-direction:column}
+.rate:last-child{border-right:none}
+@media(max-width:860px){.rate{border-right:none;border-bottom:1px solid var(--line)}.rate:last-child{border-bottom:none}}
+.rate.pop{box-shadow:inset 0 3px 0 var(--gold-a)}
+.rate .tag{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-text);margin-bottom:14px}
+.rate h3{font-family:var(--serif);font-variation-settings:"opsz" 60;font-weight:540;font-size:24px;letter-spacing:-.3px;margin-bottom:4px}
+.rate .px-big{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:28px;font-weight:600;color:var(--gold-core);margin:10px 0 2px}
+.rate .px-big small{font-size:13px;color:var(--muted);font-weight:400}
+.rate .px-alt{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-bottom:18px}
+.rate ul{list-style:none;margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+.rate li{font-size:14px;color:var(--muted);padding:5px 0;display:flex;gap:10px}
+.rate li::before{content:"—";color:var(--gold-text);flex-shrink:0}
+.founder-note{font-size:13px;color:var(--muted);line-height:1.55;margin-top:12px}
+.founder-note strong{color:var(--gold-text)}
+.dealer-note{color:var(--muted);font-size:14px;max-width:640px;margin:30px 0 0;line-height:1.7;border-left:2px solid var(--gold-b);padding-left:18px}
+.dealer-note strong{color:var(--offwhite)}
+
+/* waitlist */
+.waitlist{border:1px solid var(--line);background:var(--ink-2);padding:56px clamp(24px,6vw,72px)}
+.waitlist .prompt{font-family:var(--mono);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-text);margin-bottom:18px}
+.waitlist h2{font-family:var(--serif);font-weight:520;font-variation-settings:"opsz" 90;font-size:clamp(28px,3.6vw,42px);letter-spacing:-.6px;margin-bottom:14px}
+.waitlist>p{color:var(--muted);font-size:16px;max-width:540px;margin-bottom:30px;line-height:1.7}
+.form-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;max-width:560px}
+.form-row input{flex:1;min-width:220px;padding:14px 16px;border:1px solid var(--line);background:var(--ink);color:var(--offwhite);font-size:16px;outline:none;transition:border-color .2s;font-family:var(--mono);border-radius:2px}
+.form-row input:focus{border-color:var(--gold-a)}
+.form-row input::placeholder{color:var(--muted)}
+.form-note{font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--muted)}
+.form-success{color:var(--gold-text);font-size:14px;min-height:20px;margin-top:10px}
+
+/* FAQ */
+.faq-wrap{max-width:760px}
+details{border-bottom:1px solid var(--line);padding:20px 4px}
+details:first-of-type{border-top:1px solid var(--line)}
+details summary{cursor:pointer;font-weight:600;list-style:none;font-size:16.5px;display:flex;justify-content:space-between;align-items:center;letter-spacing:-.2px}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";font-family:var(--mono);color:var(--gold-text);font-size:19px;font-weight:300;flex-shrink:0;margin-left:16px}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);margin-top:12px;font-size:15px;line-height:1.7;max-width:640px}
+details a{color:var(--gold-text)}
+
+/* footer */
+footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+.foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+.foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:11.5px;letter-spacing:1px;text-transform:uppercase}
+.foot-links a:hover{color:var(--gold-core)}
+.tagline{font-family:var(--mono);letter-spacing:2.5px;text-transform:uppercase;font-size:10.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- ─── SVG DEFS ─── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#C9962F"/><stop offset="1" stop-color="#8A5E1C"/>
+  </linearGradient>
+  <!-- Constellation logo mark -->
+  <g id="mark">
+    <g stroke="url(#gold)" stroke-width="2" fill="none" stroke-linecap="round">
+      <line x1="58" y1="58" x2="40" y2="34"/>
+      <line x1="58" y1="58" x2="84" y2="40"/>
+      <line x1="58" y1="58" x2="80" y2="80"/>
+      <line x1="58" y1="58" x2="36" y2="78"/>
+      <line x1="58" y1="58" x2="30" y2="54"/>
+    </g>
+    <g fill="url(#gold)">
+      <circle cx="40" cy="34" r="5"/>
+      <circle cx="84" cy="40" r="6.5"/>
+      <circle cx="80" cy="80" r="4.5"/>
+      <circle cx="36" cy="78" r="5.5"/>
+      <circle cx="30" cy="54" r="3.5"/>
+    </g>
+    <circle cx="58" cy="58" r="8" fill="#E8C877"/>
+  </g>
+</defs>
+</svg>
+
+<!-- ─── TICKER ─── -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <div class="ticker-group">
+      <span class="t-gold">TrackCollectibles</span><span class="t-sep">·</span>
+      <span>Comic Books</span><span class="t-sep">·</span>
+      <span>Trading Cards</span><span class="t-sep">·</span>
+      <span>Coins</span><span class="t-sep">·</span>
+      <span>Vinyl Records</span><span class="t-sep">·</span>
+      <span>Toys &amp; Figures</span><span class="t-sep">·</span>
+      <span>Jewelry</span><span class="t-sep">·</span>
+      <span>Memorabilia</span><span class="t-sep">·</span>
+      <span class="t-gold">Live eBay pricing</span><span class="t-sep">·</span>
+      <span>AI listing in one tap</span><span class="t-sep">·</span>
+      <span class="t-gold">Launching 2026 — iOS</span><span class="t-sep">·</span>
+    </div>
+    <div class="ticker-group">
+      <span class="t-gold">TrackCollectibles</span><span class="t-sep">·</span>
+      <span>Comic Books</span><span class="t-sep">·</span>
+      <span>Trading Cards</span><span class="t-sep">·</span>
+      <span>Coins</span><span class="t-sep">·</span>
+      <span>Vinyl Records</span><span class="t-sep">·</span>
+      <span>Toys &amp; Figures</span><span class="t-sep">·</span>
+      <span>Jewelry</span><span class="t-sep">·</span>
+      <span>Memorabilia</span><span class="t-sep">·</span>
+      <span class="t-gold">Live eBay pricing</span><span class="t-sep">·</span>
+      <span>AI listing in one tap</span><span class="t-sep">·</span>
+      <span class="t-gold">Launching 2026 — iOS</span><span class="t-sep">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── NAV ─── -->
+<header>
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 116 116" width="30" height="30" aria-hidden="true">
+        <rect width="116" height="116" rx="26" fill="#14161F"/>
+        <use href="#mark"/>
+      </svg>
+      <span class="word"><b>Track</b><span>Collectibles</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#market">Market</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Rate card</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <a class="btn nav-cta" href="#waitlist">Join waitlist</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-rule reveal">
+      <span class="smallcaps"><span class="live-dot"></span>Launching 2026 · iOS</span>
+      <span class="lotno">№ 001 — THE OPENING BELL</span>
+    </div>
+    <h1 class="reveal">The stock-trading platform for your <span class="wonk">collectibles</span></h1>
+    <div class="hero-sub reveal">
+      <p>Scan a slabbed comic, a PSA 10, a Morgan dollar — anything in the long box — and see what it's listed for on eBay right now. Track the whole collection like a portfolio. When you're ready to sell, the AI writes the listing.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#waitlist">Get early access</a>
+        <a class="btn btn-ghost" href="#how">How it works</a>
+      </div>
+    </div>
+
+    <!-- Market board -->
+    <div class="board reveal" id="market">
+      <div class="board-head">
+        <span class="bh-l">TRACKCOLLECTIBLES — MARKET BOARD<span class="cursor"></span></span>
+        <span class="bh-r"><span class="live-dot"></span>Pricing from live eBay listings</span>
+      </div>
+      <div class="board-scroll">
+        <table class="mkt">
+          <thead>
+            <tr><th>Item</th><th>Category</th><th>Grade</th><th class="r">7d</th><th class="r">Live</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="item">Batman #232 — 1st Ra's al Ghul</td>
+              <td class="cat">Comics</td><td class="grade">CGC 9.8</td>
+              <td class="r up">▲ 2.1%</td><td class="r px">$1,240</td>
+            </tr>
+            <tr>
+              <td class="item">Charizard VMAX</td>
+              <td class="cat">Trading Cards</td><td class="grade">PSA 10</td>
+              <td class="r up">▲ 4.8%</td><td class="r px">$890</td>
+            </tr>
+            <tr>
+              <td class="item">1985 Optimus Prime — MIB</td>
+              <td class="cat">Toys</td><td class="grade">Boxed</td>
+              <td class="r up">▲ 3.4%</td><td class="r px">$660</td>
+            </tr>
+            <tr>
+              <td class="item">Morgan Silver Dollar 1881-S</td>
+              <td class="cat">Coins</td><td class="grade">MS65</td>
+              <td class="r dn">▼ 0.6%</td><td class="r px">$420</td>
+            </tr>
+            <tr>
+              <td class="item">The Beatles — Revolver, UK 1st press</td>
+              <td class="cat">Vinyl</td><td class="grade">VG+</td>
+              <td class="r up">▲ 1.2%</td><td class="r px">$310</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="board-foot">Sample items, shown for illustration. In the app, prices come from live eBay listings for your actual items.</div>
+    </div>
+
+    <div class="statstrip reveal">
+      <div><b data-count="8">8</b><small>Categories at launch</small></div>
+      <div><b>AI</b><small>Scan · identify · list</small></div>
+      <div><b data-count="500">500</b><small>Lifetime Founder spots</small></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="sec-rule reveal">
+      <h2 class="sec">From the long box to <span class="wonk">listed</span></h2>
+      <span class="lotno">№ 002 — THE METHOD</span>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="num">01</span>
+        <h3>Scan the item</h3>
+        <p>Point your camera at any collectible. On-device vision reads slab labels, barcodes, and artwork — AI fills in the rest. No manual entry.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num">02</span>
+        <h3>Read the market</h3>
+        <p>Pricing from live eBay listings, the moment you scan. Your portfolio updates automatically — tracked like a stock account, not a spreadsheet.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num">03</span>
+        <h3>Post the listing</h3>
+        <p>One tap produces a complete eBay listing — optimized title, full description, item specifics, and a suggested price. Copy and post.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SPEC SHEET ─── -->
+<section class="section" id="features" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-rule reveal">
+      <h2 class="sec">The spec sheet</h2>
+      <span class="lotno">№ 003 — CAPABILITIES</span>
+    </div>
+    <dl class="spec">
+      <div class="spec-row reveal">
+        <dt>AI scan &amp; identify</dt>
+        <dd>Point your camera at any item. On-device vision plus AI reads slab labels, barcodes, and visual details across all <b>8 categories</b> — no typing, no lookup tables.</dd>
+      </div>
+      <div class="spec-row reveal">
+        <dt>Live market value</dt>
+        <dd>Pricing pulled from <b>live eBay listings</b>. Your portfolio total reflects today's market, not a guess from a price guide printed last year.</dd>
+      </div>
+      <div class="spec-row reveal">
+        <dt>AI listing generator</dt>
+        <dd>One tap turns a scan into a complete, copy-paste eBay listing: <b>optimized title, description, item specifics, and a suggested price</b>. Ready to post.</dd>
+      </div>
+      <div class="spec-row reveal">
+        <dt>Portfolio tracking</dt>
+        <dd>Watch your collection's total value move over time — <b>tracked like a stock account</b>. See your winners and movers at a glance.</dd>
+      </div>
+      <div class="spec-row reveal">
+        <dt>Graded slab support</dt>
+        <dd>Reads <b>CGC, CBCS, PGX, and more</b> — grade, cert number, label type, signature series, and variants captured automatically from the slab label.</dd>
+      </div>
+      <div class="spec-row reveal">
+        <dt>Built for sellers</dt>
+        <dd>From a single garage-sale find to a dealer inventory, it scales with you. <b>Bulk listing tools</b> and multi-marketplace formats are on the roadmap.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ─── THE INDEX ─── -->
+<section class="section" id="categories" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-rule reveal">
+      <h2 class="sec">The index</h2>
+      <span class="lotno">№ 004 — WHAT IT COVERS</span>
+    </div>
+    <p class="lead reveal">Not just comics. TrackCollectibles supports the things people actually collect — with AI trained to identify each one.</p>
+    <div class="index reveal">
+      <div class="ix"><span class="n">01</span><span class="name">Comic Books</span><span class="note">Slabbed &amp; raw</span></div>
+      <div class="ix"><span class="n">02</span><span class="name">Trading Cards</span><span class="note">Sports &amp; TCG</span></div>
+      <div class="ix"><span class="n">03</span><span class="name">Coins</span><span class="note">Graded &amp; circulated</span></div>
+      <div class="ix"><span class="n">04</span><span class="name">Vinyl Records</span><span class="note">Pressings &amp; variants</span></div>
+      <div class="ix"><span class="n">05</span><span class="name">Toys &amp; Figures</span><span class="note">Boxed &amp; loose</span></div>
+      <div class="ix"><span class="n">06</span><span class="name">Jewelry</span><span class="note">Vintage &amp; estate</span></div>
+      <div class="ix"><span class="n">07</span><span class="name">Memorabilia</span><span class="note">Signed &amp; certified</span></div>
+      <div class="ix"><span class="n">08</span><span class="name">More coming</span><span class="note">You tell us</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RATE CARD ─── -->
+<section class="section" id="pricing" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-rule reveal">
+      <h2 class="sec">The rate card</h2>
+      <span class="lotno">№ 005 — PLANNED PRICING</span>
+    </div>
+    <p class="lead reveal">Planned pricing at launch. Start free, upgrade when your collection grows — all billing through Apple, no surprises.</p>
+    <div class="rates reveal">
+
+      <div class="rate">
+        <span class="tag">Free forever</span>
+        <h3>Free</h3>
+        <div class="px-big">$0</div>
+        <div class="px-alt">&nbsp;</div>
+        <ul>
+          <li>20 collection slots</li>
+          <li>3 AI listings (lifetime)</li>
+          <li>Live eBay pricing</li>
+          <li>All 8 categories</li>
+        </ul>
+      </div>
+
+      <div class="rate pop">
+        <span class="tag">★ Most popular</span>
+        <h3>Premium</h3>
+        <div class="px-big">$7.99<small>/mo</small></div>
+        <div class="px-alt">or $49.99/yr — save 48%</div>
+        <ul>
+          <li>Unlimited collection slots</li>
+          <li>100 AI listings / month</li>
+          <li>All marketplace formats</li>
+          <li>Priority AI (V1.5)</li>
+        </ul>
+      </div>
+
+      <div class="rate">
+        <span class="tag">⚡ Launch exclusive</span>
+        <h3>Lifetime Founder</h3>
+        <div class="px-big">$129<small> once</small></div>
+        <div class="px-alt">Premium features, forever</div>
+        <p class="founder-note">Capped at <strong>500 spots, ever</strong> — sold once at launch, then retired permanently. Waitlist members get first access.</p>
+        <ul style="margin-top:12px">
+          <li>Unlimited collection slots</li>
+          <li>100 AI listings / month</li>
+          <li>Founder badge &amp; perks</li>
+        </ul>
+      </div>
+
+    </div>
+    <p class="dealer-note reveal">Running a shop? <strong>Dealer Pro</strong> ($29.99/mo or $249/yr) adds 500 AI listings a month, bulk listing tools, and a Verified Dealer badge — coming at launch.</p>
+  </div>
+</section>
+
+<!-- ─── WAITLIST ─── -->
+<section class="section" id="waitlist" style="padding-top:0">
+  <div class="wrap">
+    <div class="waitlist reveal">
+      <div class="prompt">№ 006 — RESERVE YOUR SEAT · 500 Lifetime Founder spots at launch</div>
+      <h2>Be first on the <span class="wonk" style="font-variation-settings:'opsz' 90,'WONK' 1;font-style:italic;color:var(--gold-core)">floor</span></h2>
+      <p>Join the waitlist and get one email the moment TrackCollectibles hits the App Store. Waitlist members get priority access to Lifetime Founder spots.</p>
+      <form id="waitlist-form" action="https://formspree.io/f/mlgkljko" method="POST">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-row">
+          <label class="visually-hidden" for="waitlist-email">Email address</label>
+          <input id="waitlist-email" type="email" name="email" required placeholder="your@email.com" autocomplete="email">
+          <button class="btn" type="submit">Get early access</button>
+        </div>
+        <p class="form-note">No spam. One email when we launch. Unsubscribe any time.</p>
+        <p class="form-success" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap faq-wrap">
+    <div class="sec-rule reveal">
+      <h2 class="sec">Questions</h2>
+      <span class="lotno">№ 007 — THE FINE PRINT</span>
+    </div>
+    <div>
+      <details open>
+        <summary>When does it launch?</summary>
+        <p>TrackCollectibles is in active development, targeting a mid-2026 iOS release. Join the waitlist above and you'll be the first to know — waitlist members get priority access to early TestFlight builds.</p>
+      </details>
+      <details>
+        <summary>What can I scan?</summary>
+        <p>Comics, trading cards, coins, vinyl records, toys &amp; figures, jewelry, memorabilia, and more. The AI identifies items from a photo and pulls live market pricing automatically. Graded slabs (CGC, CBCS, PGX, and more) are fully supported.</p>
+      </details>
+      <details>
+        <summary>Does it sell items for me?</summary>
+        <p>In V1, the app generates a complete, ready-to-paste eBay listing that you review and post yourself — no auto-listing. Direct in-app selling and trading are on the V2 roadmap.</p>
+      </details>
+      <details>
+        <summary>How accurate is the AI?</summary>
+        <p>Very accurate on text-rich items like graded slabs (reads the label directly). For raw items it uses visual AI plus cross-referenced database lookups. You always review and confirm the identification before saving — nothing gets added to your collection without your approval.</p>
+      </details>
+      <details>
+        <summary>Is my collection data private?</summary>
+        <p>Yes. Scan photos are processed and discarded — they're not stored permanently. Your collection data is yours, stored securely in your account. See our <a href="privacy.html">Privacy Policy</a> for full details.</p>
+      </details>
+      <details>
+        <summary>What is the Lifetime Founder plan?</summary>
+        <p>A one-time $129 payment that gives you unlimited collection slots and 100 AI listings per month — for life. It's capped at 500 total and will never be reopened once sold out. Early waitlist members get first access when the app launches.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="wrap foot-in">
+    <div class="brand" style="display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600">
+      <svg viewBox="0 0 116 116" width="24" height="24" aria-hidden="true">
+        <rect width="116" height="116" rx="26" fill="#14161F"/>
+        <use href="#mark"/>
+      </svg>
+      <span><b>Track</b><span style="color:var(--gold-text);font-weight:400">Collectibles</span></span>
+    </div>
+    <div class="tagline">Know what your collection is worth</div>
+    <div class="foot-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <span>© 2026 TrackCollectibles</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
