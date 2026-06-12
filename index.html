@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TrackCollectibles — Know What Your Collection Is Worth</title>
-<meta name="description" content="TrackCollectibles is a stock-trading platform for your collectibles. Scan any item, get live market values, and generate ready-to-list eBay listings with AI. Comics, cards, coins, vinyl, toys, and more.">
+<meta name="description" content="The stock-trading platform for your collectibles. Scan comics, cards, coins and more — see live eBay values and generate ready-to-post listings with AI.">
 
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; connect-src 'self' https://formspree.io; base-uri 'self'; form-action 'self' https://formspree.io; frame-ancestors 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -27,6 +27,74 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script src="app.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://trackcollectibles.com/#org",
+      "name": "TrackCollectibles",
+      "url": "https://trackcollectibles.com/",
+      "logo": "https://trackcollectibles.com/apple-touch-icon.png",
+      "email": "support@trackcollectibles.com",
+      "description": "TrackCollectibles is an iOS app that helps collectors scan, value, and list their collectibles using AI and live eBay market pricing."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://trackcollectibles.com/#website",
+      "url": "https://trackcollectibles.com/",
+      "name": "TrackCollectibles",
+      "publisher": { "@id": "https://trackcollectibles.com/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "TrackCollectibles",
+      "url": "https://trackcollectibles.com/",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "iOS",
+      "description": "Scan any collectible — comics, trading cards, coins, vinyl records, toys, jewelry, memorabilia — and see live eBay market values. Track your collection like a portfolio and generate complete, ready-to-post eBay listings with AI. Launching 2026 on iOS.",
+      "publisher": { "@id": "https://trackcollectibles.com/#org" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When does TrackCollectibles launch?",
+          "acceptedAnswer": { "@type": "Answer", "text": "TrackCollectibles is in active development, targeting a mid-2026 iOS release. Waitlist members get priority access to early TestFlight builds." }
+        },
+        {
+          "@type": "Question",
+          "name": "What can I scan?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Comics, trading cards, coins, vinyl records, toys and figures, jewelry, memorabilia, and more. The AI identifies items from a photo and pulls live market pricing automatically. Graded slabs (CGC, CBCS, PGX, and more) are fully supported." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it sell items for me?",
+          "acceptedAnswer": { "@type": "Answer", "text": "In V1, the app generates a complete, ready-to-paste eBay listing that you review and post yourself — no auto-listing. Direct in-app selling and trading are on the V2 roadmap." }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate is the AI?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Very accurate on text-rich items like graded slabs, where it reads the label directly. For raw items it uses visual AI plus cross-referenced database lookups. You always review and confirm the identification before saving." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my collection data private?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Scan photos are processed and discarded — they're not stored permanently. Your collection data is yours, stored securely in your account." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Lifetime Founder plan?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A one-time $129 payment that gives you unlimited collection slots and 100 AI listings per month — for life. It's capped at 500 total and will never be reopened once sold out. Early waitlist members get first access at launch." }
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <style>
 @font-face{
