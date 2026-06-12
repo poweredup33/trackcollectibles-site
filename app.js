@@ -59,7 +59,7 @@
   if (!form) return;
   var statusEl = form.querySelector(".form-success");
   var button = form.querySelector("button[type=submit]");
-  var FALLBACK = "Something went wrong — please try again, or email awardwinninggear@gmail.com and we'll add you by hand.";
+  var FALLBACK = "Something went wrong — please try again, or email support@trackcollectibles.com and we'll add you by hand.";
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -67,7 +67,7 @@
 
     // Not wired up yet? Be honest instead of pretending.
     if (form.action.indexOf("YOUR_FORM_ID") !== -1) {
-      statusEl.textContent = "The waitlist opens very soon — meanwhile, email awardwinninggear@gmail.com and we'll add you by hand.";
+      statusEl.textContent = "The waitlist opens very soon — meanwhile, email support@trackcollectibles.com and we'll add you by hand.";
       return;
     }
 
