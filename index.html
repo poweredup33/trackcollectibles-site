@@ -78,6 +78,11 @@
         },
         {
           "@type": "Question",
+          "name": "Do my items need to be graded or slabbed?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. TrackCollectibles works with raw, ungraded items just as well as slabbed ones. For graded slabs it reads the label directly; for raw items it identifies them visually and cross-references databases, then prices them from comparable live eBay listings. Grading is never required." }
+        },
+        {
+          "@type": "Question",
           "name": "How accurate is the AI?",
           "acceptedAnswer": { "@type": "Answer", "text": "Very accurate on text-rich items like graded slabs, where it reads the label directly. For raw items it uses visual AI plus cross-referenced database lookups. You always review and confirm the identification before saving." }
         },
@@ -484,7 +489,7 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
     <div class="hero-grid">
       <div class="hero-lead reveal">
         <h1>Know what your collection is worth — <span class="wonk">right now</span></h1>
-        <p>Scan a slabbed comic, a PSA 10, a Morgan dollar — anything in the long box — and see what it's listed for on eBay right now. Track the whole collection like a portfolio. When you're ready to sell, the AI writes the listing.</p>
+        <p>Scan a slabbed comic, a PSA 10, or a raw key straight out of the long box — graded or not, the AI identifies it and shows what it's listed for on eBay right now. Track the whole collection like a portfolio. When you're ready to sell, the AI writes the listing.</p>
         <div class="hero-cta">
           <a class="btn" href="#waitlist">Get early access</a>
           <a class="btn btn-ghost" href="#how">How it works</a>
@@ -592,7 +597,7 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
             </tr>
             <tr>
               <td class="item">1985 Optimus Prime — MIB</td>
-              <td class="cat">Toys</td><td class="grade">Boxed</td>
+              <td class="cat">Toys</td><td class="grade">Raw · boxed</td>
               <td class="r up" data-chg>▲ 3.4%</td>
               <td class="spark" data-spark="up"></td>
               <td class="r px" data-px="660">$660</td>
@@ -606,7 +611,7 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
             </tr>
             <tr>
               <td class="item">The Beatles — Revolver, UK 1st press</td>
-              <td class="cat">Vinyl</td><td class="grade">VG+</td>
+              <td class="cat">Vinyl</td><td class="grade">Raw · VG+</td>
               <td class="r up" data-chg>▲ 1.2%</td>
               <td class="spark" data-spark="up"></td>
               <td class="r px" data-px="310">$310</td>
@@ -665,7 +670,7 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
     <dl class="spec">
       <div class="spec-row reveal">
         <dt>AI scan &amp; identify</dt>
-        <dd>Point your camera at any item. On-device vision plus AI reads slab labels, barcodes, and visual details across all <b>8 categories</b> — no typing, no lookup tables.</dd>
+        <dd>Point your camera at any item — <b>graded or raw</b>. On-device vision plus AI reads slab labels, barcodes, and visual details across all <b>8 categories</b> — no typing, no lookup tables.</dd>
       </div>
       <div class="spec-row reveal">
         <dt>Live market value</dt>
@@ -682,6 +687,10 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
       <div class="spec-row reveal">
         <dt>Graded slab support</dt>
         <dd>Reads <b>CGC, CBCS, PGX, and more</b> — grade, cert number, label type, signature series, and variants captured automatically from the slab label.</dd>
+      </div>
+      <div class="spec-row reveal">
+        <dt>Raw &amp; ungraded too</dt>
+        <dd>No slab? No problem. The AI identifies <b>raw, ungraded items</b> straight from a photo — comics, loose cards, circulated coins, records, toys — and prices them from comparable live listings. <b>Grading is optional, never required.</b></dd>
       </div>
       <div class="spec-row reveal">
         <dt>Built for sellers</dt>
@@ -806,6 +815,10 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
       <details>
         <summary>Does it sell items for me?</summary>
         <p>In V1, the app generates a complete, ready-to-paste eBay listing that you review and post yourself — no auto-listing. Direct in-app selling and trading are on the V2 roadmap.</p>
+      </details>
+      <details>
+        <summary>Do my items need to be graded or slabbed?</summary>
+        <p>No. TrackCollectibles works with raw, ungraded items just as well as slabbed ones. For graded slabs it reads the label directly; for raw items it identifies them visually and cross-references databases, then prices them from comparable live eBay listings. Grading is never required.</p>
       </details>
       <details>
         <summary>How accurate is the AI?</summary>
