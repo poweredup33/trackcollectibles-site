@@ -263,6 +263,34 @@
     }
   })();
 
+  /* ── 8. Scroll progress + phone parallax + sticky CTA ── */
+  (function () {
+    var bar = document.querySelector("[data-scrollbar]");
+    var sticky = document.querySelector("[data-stickycta]");
+    var heroEl = document.querySelector(".hero");
+    var phoneP = document.querySelector(".phone-wrap");
+    var ticking = false;
+    function onScroll() {
+      var y = window.pageYOffset || document.documentElement.scrollTop;
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      if (bar) bar.style.width = (docH > 0 ? (y / docH * 100) : 0) + "%";
+      if (sticky) {
+        var past = heroEl ? (y > heroEl.offsetHeight * 0.6) : (y > 600);
+        sticky.classList.toggle("show", past);
+        sticky.setAttribute("aria-hidden", past ? "false" : "true");
+        sticky.setAttribute("tabindex", past ? "0" : "-1");
+      }
+      if (phoneP && !reduceMotion && y < window.innerHeight * 1.3) {
+        phoneP.style.marginTop = (y * -0.04).toFixed(1) + "px";
+      }
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+    }, { passive: true });
+    onScroll();
+  })();
+
   /* ── 3. Waitlist form ── */
   var form = document.getElementById("waitlist-form");
   if (!form) return;

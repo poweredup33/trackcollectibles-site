@@ -27,7 +27,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
-<script src="app.js?v=2" defer></script>
+<script src="app.js?v=3" defer></script>
 
 <script type="application/ld+json">
 {
@@ -90,6 +90,16 @@
           "@type": "Question",
           "name": "Is my collection data private?",
           "acceptedAnswer": { "@type": "Answer", "text": "Yes. Scan photos are processed and discarded — they're not stored permanently. Your collection data is yours, stored securely in your account." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does TrackCollectibles cost?",
+          "acceptedAnswer": { "@type": "Answer", "text": "There is a free tier (20 items, 3 AI listings). Premium is $7.99/month or $49.99/year for unlimited items and 100 AI listings per month. A one-time Lifetime Founder plan ($129) is offered in a strictly limited first wave at launch. All billing runs through Apple." }
+        },
+        {
+          "@type": "Question",
+          "name": "How is this different from a price guide?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A printed price guide is a snapshot from months ago. TrackCollectibles pulls what items are listed for on eBay right now and tracks your whole collection like a portfolio, so the value reflects today's market." }
         },
         {
           "@type": "Question",
@@ -433,9 +443,46 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
 .phone.scanning .ps-fab svg{opacity:.5}
 @media(prefers-reduced-motion:reduce){.phone.scanning .scan-beam{animation:none}.ps-row.justadded{animation:none}.ps-layer{transition:none}}
 
+
+/* ── a11y: skip link + global focus ── */
+.skip-link{position:fixed;top:-60px;left:12px;z-index:200;background:var(--gold-a);color:var(--ink);padding:10px 16px;border-radius:4px;font-weight:600;font-size:14px;transition:top .2s}
+.skip-link:focus{top:12px}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--gold-core);outline-offset:2px;border-radius:2px}
+
+/* ── scroll progress bar ── */
+.scrollbar{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--gold-b),var(--gold-core));box-shadow:0 0 10px rgba(232,200,119,.5);transition:width .1s linear}
+
+/* ── trust strip ── */
+.trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2);padding:20px 0}
+.trust-in{display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}
+.trust-label{font-family:var(--mono);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.trust-row{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:center;font-family:var(--serif);font-variation-settings:"opsz" 40;font-weight:560;font-size:20px;letter-spacing:.5px;color:var(--offwhite)}
+.trust-row .trust-sep{color:var(--line)}
+.trust-row .trust-ebay{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:.5px;color:var(--gold-text);text-transform:uppercase}
+
+/* ── from the vault feature ── */
+.vfeat{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+@media(max-width:760px){.vfeat{grid-template-columns:1fr}}
+.vfeat-card{display:flex;flex-direction:column;gap:10px;padding:26px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .2s}
+.vfeat-card:hover{background:var(--ink-2)}
+.vfeat-cat{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-text)}
+.vfeat-title{font-family:var(--serif);font-variation-settings:"opsz" 60;font-weight:520;font-size:22px;line-height:1.15;letter-spacing:-.3px;color:var(--offwhite)}
+.vfeat-dek{color:var(--muted);font-size:14.5px;line-height:1.6;flex:1}
+.vfeat-go{font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-text)}
+.vfeat-card:hover .vfeat-go{color:var(--gold-core)}
+
+/* ── sticky waitlist CTA ── */
+.sticky-cta{position:fixed;right:20px;bottom:20px;z-index:90;background:var(--gold-a);color:var(--ink);font-weight:600;font-size:14px;padding:13px 22px;border-radius:40px;box-shadow:0 12px 34px -8px rgba(201,150,47,.6);opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .3s,transform .3s,background .15s;letter-spacing:.3px}
+.sticky-cta.show{opacity:1;transform:none;pointer-events:auto}
+.sticky-cta:hover{background:var(--gold-core)}
+@media(max-width:560px){.sticky-cta{left:16px;right:16px;text-align:center;bottom:16px}}
+@media(prefers-reduced-motion:reduce){.scrollbar{transition:none}.sticky-cta{transition:opacity .2s}}
+
 </style>
 </head>
 <body>
+<a class="skip-link" href="#top">Skip to content</a>
+<div class="scrollbar" data-scrollbar aria-hidden="true"></div>
 
 <!-- ─── SVG DEFS ─── -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -696,6 +743,20 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
   </div>
 </div>
 
+<!-- ─── TRUST STRIP ─── -->
+<section class="trust reveal" aria-label="What TrackCollectibles works with">
+  <div class="wrap">
+    <div class="trust-in">
+      <span class="trust-label">Built around the standards collectors already trust</span>
+      <div class="trust-row">
+        <span>CGC</span><span>CBCS</span><span>PGX</span><span>PSA</span><span>BGS</span><span>SGC</span>
+        <span class="trust-sep">·</span>
+        <span class="trust-ebay">Live pricing from eBay</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── HOW IT WORKS ─── -->
 <section class="section" id="how">
   <div class="wrap">
@@ -838,6 +899,38 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
   </div>
 </section>
 
+<!-- ─── FROM THE VAULT ─── -->
+<section class="section" id="vault-feature" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-rule reveal">
+      <h2 class="sec">From <span class="wonk">The Vault</span></h2>
+      <span class="lotno">№ 006 — THE JOURNAL</span>
+    </div>
+    <p class="lead reveal">Record sales, real attic finds, and plain-English guides to what your collection is worth.</p>
+    <div class="vfeat">
+      <a class="vfeat-card reveal" href="vault/most-expensive-comic-books-ever-sold.html">
+        <span class="vfeat-cat">Records · Comics</span>
+        <span class="vfeat-title">The Most Expensive Comic Books Ever Sold</span>
+        <span class="vfeat-dek">From a $9.12M attic Superman to a reported $15M Action Comics #1.</span>
+        <span class="vfeat-go">Read →</span>
+      </a>
+      <a class="vfeat-card reveal" href="vault/what-is-my-comic-book-worth.html">
+        <span class="vfeat-cat">Guide · Comics</span>
+        <span class="vfeat-title">What Is My Comic Book Worth?</span>
+        <span class="vfeat-dek">The five things that decide a comic's value — and how to get a real number.</span>
+        <span class="vfeat-go">Read →</span>
+      </a>
+      <a class="vfeat-card reveal" href="vault/most-expensive-trading-cards-ever-sold.html">
+        <span class="vfeat-cat">Records · Cards</span>
+        <span class="vfeat-title">The Most Expensive Trading Cards Ever Sold</span>
+        <span class="vfeat-dek">A $16.49M Pikachu just outsold every baseball card in history.</span>
+        <span class="vfeat-go">Read →</span>
+      </a>
+    </div>
+    <p class="reveal" style="margin-top:28px"><a class="btn btn-ghost" href="vault/index.html">Explore The Vault</a></p>
+  </div>
+</section>
+
 <!-- ─── WAITLIST ─── -->
 <section class="section" id="waitlist" style="padding-top:0">
   <div class="wrap">
@@ -888,6 +981,14 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
         <p>Very accurate on text-rich items like graded slabs (reads the label directly). For raw items it identifies them visually and cross-references databases. You always review and confirm the identification before saving, nothing gets added to your collection without your approval.</p>
       </details>
       <details>
+        <summary>How much does it cost?</summary>
+        <p>There's a free tier (20 items, 3 AI listings). Premium is $7.99/mo or $49.99/yr for unlimited items and 100 AI listings a month. A one-time <strong>Lifetime Founder</strong> plan ($129) is offered in a strictly limited first wave at launch. All billing runs through Apple.</p>
+      </details>
+      <details>
+        <summary>How is this different from a price guide?</summary>
+        <p>A printed guide is a snapshot from months ago. TrackCollectibles pulls what items are listed for on eBay right now and tracks your whole collection like a portfolio, so the value reflects today's market — not last year's book.</p>
+      </details>
+      <details>
         <summary>Is my collection data private?</summary>
         <p>Yes. Scan photos are processed and discarded — they're not stored permanently. Your collection data is yours, stored securely in your account. See our <a href="privacy.html">Privacy Policy</a> for full details.</p>
       </details>
@@ -921,5 +1022,6 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
   </div>
 </footer>
 
+<a class="sticky-cta" href="#waitlist" data-stickycta aria-hidden="true" tabindex="-1">Join the waitlist →</a>
 </body>
 </html>
