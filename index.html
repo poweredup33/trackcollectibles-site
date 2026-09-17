@@ -27,7 +27,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
-<script src="app.js?v=3" defer></script>
+<script src="app.js" defer></script>
 
 <script type="application/ld+json">
 {
@@ -90,16 +90,6 @@
           "@type": "Question",
           "name": "Is my collection data private?",
           "acceptedAnswer": { "@type": "Answer", "text": "Yes. Scan photos are processed and discarded — they're not stored permanently. Your collection data is yours, stored securely in your account." }
-        },
-        {
-          "@type": "Question",
-          "name": "How much does TrackCollectibles cost?",
-          "acceptedAnswer": { "@type": "Answer", "text": "There is a free tier (20 items, 3 AI listings). Premium is $7.99/month or $49.99/year for unlimited items and 100 AI listings per month. A one-time Lifetime Founder plan ($129) is offered in a strictly limited first wave at launch. All billing runs through Apple." }
-        },
-        {
-          "@type": "Question",
-          "name": "How is this different from a price guide?",
-          "acceptedAnswer": { "@type": "Answer", "text": "A printed price guide is a snapshot from months ago. TrackCollectibles pulls what items are listed for on eBay right now and tracks your whole collection like a portfolio, so the value reflects today's market." }
         },
         {
           "@type": "Question",
@@ -397,92 +387,9 @@ footer{padding:46px 0 56px;border-top:1px solid var(--line);color:var(--muted);f
 .foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:11.5px;letter-spacing:1px;text-transform:uppercase}
 .foot-links a:hover{color:var(--gold-core)}
 .tagline{font-family:var(--mono);letter-spacing:2.5px;text-transform:uppercase;font-size:10.5px;color:var(--muted)}
-
-/* ── interactive scan demo ── */
-.scan-try{margin-top:28px}
-.scan-try-label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-text);margin-bottom:12px}
-.scan-chips{display:flex;flex-wrap:wrap;gap:8px}
-.scan-chip{font-family:var(--mono);font-size:12px;letter-spacing:.2px;color:var(--offwhite);background:var(--ink-2);border:1px solid var(--line);border-radius:22px;padding:9px 15px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
-.scan-chip:hover{border-color:var(--gold-a);color:var(--gold-core)}
-.scan-chip:focus-visible{outline:2px solid var(--gold-a);outline-offset:2px}
-.scan-chip:disabled{opacity:.38;cursor:default;color:var(--muted);border-color:var(--line)}
-.scan-chip.busy{cursor:progress;opacity:.6}
-.scan-hint{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:12px;min-height:15px;line-height:1.5;max-width:420px}
-
-.ps-layer{position:absolute;inset:0;transition:opacity .4s ease}
-.ps-scanner{opacity:0;pointer-events:none;background:var(--ink);display:flex;flex-direction:column;padding:30px 18px 78px;z-index:6}
-.phone.scanning .ps-scanner{opacity:1}
-.phone.scanning .ps-portfolio{opacity:0}
-.scan-topbar{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.scan-topbar .scan-dot{width:7px;height:7px;border-radius:50%;background:var(--dn);box-shadow:0 0 8px var(--dn)}
-.scan-vf{position:relative;flex:1;border-radius:16px;background:radial-gradient(120% 90% at 50% 30%,#1b1f2b,#0d0f16);overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-.scan-corners b{position:absolute;width:22px;height:22px;border:2px solid var(--gold-core);opacity:.85}
-.scan-corners b:nth-child(1){top:14px;left:14px;border-right:0;border-bottom:0;border-radius:4px 0 0 0}
-.scan-corners b:nth-child(2){top:14px;right:14px;border-left:0;border-bottom:0;border-radius:0 4px 0 0}
-.scan-corners b:nth-child(3){bottom:14px;left:14px;border-right:0;border-top:0;border-radius:0 0 0 4px}
-.scan-corners b:nth-child(4){bottom:14px;right:14px;border-left:0;border-top:0;border-radius:0 0 4px 0}
-.scan-slab{width:92px;height:128px;border-radius:8px;background:linear-gradient(160deg,#262a36,#191c26);border:1px solid var(--line);position:relative;box-shadow:0 14px 34px -12px #000}
-.scan-slab i{position:absolute;top:0;left:0;right:0;height:22px;border-radius:8px 8px 0 0;background:var(--muted);opacity:.9}
-.scan-beam{position:absolute;left:8%;right:8%;height:38px;top:-40px;background:linear-gradient(180deg,transparent,rgba(232,200,119,.42),transparent);box-shadow:0 0 20px 4px rgba(232,200,119,.35);opacity:0;border-radius:4px}
-.phone.scanning .scan-beam{animation:beam 1.05s cubic-bezier(.4,0,.2,1)}
-@keyframes beam{0%{top:8%;opacity:0}12%{opacity:1}88%{opacity:1}100%{top:76%;opacity:0}}
-.scan-cap{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-text);text-align:center;min-height:15px;transition:color .2s}
-.scan-cap.ok{color:var(--up)}
-.scan-result{text-align:center;margin-top:8px;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
-.scan-result.show{opacity:1;transform:none}
-.scan-result .rt{font-weight:600;color:var(--offwhite);font-size:14px}
-.scan-result .rg{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px}
-.scan-result .rp{font-family:var(--mono);font-size:22px;color:var(--gold-core);font-weight:600;margin-top:6px}
-.ps-list{margin-top:2px}
-.ps-empty{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;padding:26px 10px;line-height:1.5}
-.ps-added{color:var(--gold-core);font-weight:600}
-.ps-sub{color:var(--muted)}
-.ps-row.justadded{animation:rowin .55s ease}
-@keyframes rowin{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.ps-fab{-webkit-appearance:none;appearance:none;border:0;padding:0;cursor:pointer}
-.phone.scanning .ps-fab svg{opacity:.5}
-@media(prefers-reduced-motion:reduce){.phone.scanning .scan-beam{animation:none}.ps-row.justadded{animation:none}.ps-layer{transition:none}}
-
-
-/* ── a11y: skip link + global focus ── */
-.skip-link{position:fixed;top:-60px;left:12px;z-index:200;background:var(--gold-a);color:var(--ink);padding:10px 16px;border-radius:4px;font-weight:600;font-size:14px;transition:top .2s}
-.skip-link:focus{top:12px}
-a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--gold-core);outline-offset:2px;border-radius:2px}
-
-/* ── scroll progress bar ── */
-.scrollbar{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--gold-b),var(--gold-core));box-shadow:0 0 10px rgba(232,200,119,.5);transition:width .1s linear}
-
-/* ── trust strip ── */
-.trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2);padding:20px 0}
-.trust-in{display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}
-.trust-label{font-family:var(--mono);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.trust-row{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;justify-content:center;font-family:var(--serif);font-variation-settings:"opsz" 40;font-weight:560;font-size:20px;letter-spacing:.5px;color:var(--offwhite)}
-.trust-row .trust-sep{color:var(--line)}
-.trust-row .trust-ebay{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:.5px;color:var(--gold-text);text-transform:uppercase}
-
-/* ── from the vault feature ── */
-.vfeat{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
-@media(max-width:760px){.vfeat{grid-template-columns:1fr}}
-.vfeat-card{display:flex;flex-direction:column;gap:10px;padding:26px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .2s}
-.vfeat-card:hover{background:var(--ink-2)}
-.vfeat-cat{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-text)}
-.vfeat-title{font-family:var(--serif);font-variation-settings:"opsz" 60;font-weight:520;font-size:22px;line-height:1.15;letter-spacing:-.3px;color:var(--offwhite)}
-.vfeat-dek{color:var(--muted);font-size:14.5px;line-height:1.6;flex:1}
-.vfeat-go{font-family:var(--mono);font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gold-text)}
-.vfeat-card:hover .vfeat-go{color:var(--gold-core)}
-
-/* ── sticky waitlist CTA ── */
-.sticky-cta{position:fixed;right:20px;bottom:20px;z-index:90;background:var(--gold-a);color:var(--ink);font-weight:600;font-size:14px;padding:13px 22px;border-radius:40px;box-shadow:0 12px 34px -8px rgba(201,150,47,.6);opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .3s,transform .3s,background .15s;letter-spacing:.3px}
-.sticky-cta.show{opacity:1;transform:none;pointer-events:auto}
-.sticky-cta:hover{background:var(--gold-core)}
-@media(max-width:560px){.sticky-cta{left:16px;right:16px;text-align:center;bottom:16px}}
-@media(prefers-reduced-motion:reduce){.scrollbar{transition:none}.sticky-cta{transition:opacity .2s}}
-
 </style>
 </head>
 <body>
-<a class="skip-link" href="#top">Skip to content</a>
-<div class="scrollbar" data-scrollbar aria-hidden="true"></div>
 
 <!-- ─── SVG DEFS ─── -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -587,17 +494,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
           <a class="btn" href="#waitlist">Get early access</a>
           <a class="btn btn-ghost" href="#how">How it works</a>
         </div>
-
-        <div class="scan-try reveal">
-          <span class="scan-try-label">Try it — tap to scan an item</span>
-          <div class="scan-chips" role="group" aria-label="Try scanning a collectible">
-            <button class="scan-chip" type="button" data-scan="0">Batman #232</button>
-            <button class="scan-chip" type="button" data-scan="1">Charizard</button>
-            <button class="scan-chip" type="button" data-scan="2">Morgan Dollar</button>
-            <button class="scan-chip" type="button" data-scan="3">Amazing Fantasy #15 · raw</button>
-          </div>
-          <p class="scan-hint" data-scan-status aria-live="polite">Tap an item to watch the app identify it and pull a live value.</p>
-        </div>
       </div>
 
       <!-- App phone mockup -->
@@ -605,49 +501,43 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
         <div class="phone">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-
-            <!-- Portfolio view -->
-            <div class="ps-portfolio ps-layer">
-              <div class="ps-pad">
-                <div class="ps-top">
-                  <span class="ps-h">My Portfolio</span>
-                  <span class="ps-live"><span class="live-dot green" style="width:5px;height:5px"></span>Live</span>
-                </div>
-                <div class="ps-card">
-                  <div class="ps-label">Total value</div>
-                  <div class="ps-total"><span data-portfolio>$0</span></div>
-                  <div class="ps-chg"><span class="ps-added" data-ps-added></span><span class="ps-sub" data-ps-sub>Scan an item to begin</span></div>
-                  <svg class="ps-spark" viewBox="0 0 250 42" preserveAspectRatio="none" aria-hidden="true">
-                    <polyline fill="none" stroke="url(#goldv)" stroke-width="2" points="0,34 25,30 50,32 75,24 100,26 125,18 150,20 175,12 200,14 225,7 250,4"/>
-                  </svg>
-                  <div class="ps-chips"><span class="on">1W</span><span>1M</span><span>3M</span><span>All</span></div>
-                </div>
-                <div class="ps-list" data-ps-list>
-                  <div class="ps-empty" data-ps-empty>Tap the scan button to value an item</div>
-                </div>
+            <div class="ps-pad">
+              <div class="ps-top">
+                <span class="ps-h">My Portfolio</span>
+                <span class="ps-live"><span class="live-dot green" style="width:5px;height:5px"></span>Live</span>
+              </div>
+              <div class="ps-card">
+                <div class="ps-label">Total value</div>
+                <div class="ps-total"><span data-portfolio>$12,480</span></div>
+                <div class="ps-chg up">▲ 3.2% &nbsp;·&nbsp; +$384 this week</div>
+                <svg class="ps-spark" viewBox="0 0 250 42" preserveAspectRatio="none" data-spark="hero">
+                  <polyline fill="none" stroke="url(#goldv)" stroke-width="2" points="0,34 25,30 50,32 75,24 100,26 125,18 150,20 175,12 200,14 225,7 250,4"/>
+                </svg>
+                <div class="ps-chips"><span class="on">1W</span><span>1M</span><span>3M</span><span>All</span></div>
+              </div>
+              <div class="ps-row">
+                <div class="ps-thumb"><i style="background:#5DCAA5"></i></div>
+                <div class="ps-rinfo"><div class="ps-rt">Batman #232</div><div class="ps-rg">CGC 9.8 · Comics</div></div>
+                <div class="ps-rv"><div class="ps-rp">$1,240</div><div class="ps-rc up">▲ 2.1%</div></div>
+              </div>
+              <div class="ps-row">
+                <div class="ps-thumb"><i style="background:#CB9A33"></i></div>
+                <div class="ps-rinfo"><div class="ps-rt">Charizard VMAX</div><div class="ps-rg">PSA 10 · Cards</div></div>
+                <div class="ps-rv"><div class="ps-rp">$890</div><div class="ps-rc up">▲ 4.8%</div></div>
+              </div>
+              <div class="ps-row">
+                <div class="ps-thumb"><i style="background:#9A9EAC"></i></div>
+                <div class="ps-rinfo"><div class="ps-rt">Morgan Dollar</div><div class="ps-rg">MS65 · Coins</div></div>
+                <div class="ps-rv"><div class="ps-rp">$420</div><div class="ps-rc dn">▼ 0.6%</div></div>
               </div>
             </div>
-
-            <!-- Scanner view -->
-            <div class="ps-scanner ps-layer" data-scanner>
-              <div class="scan-topbar"><span>Scan</span><span class="scan-dot"></span></div>
-              <div class="scan-vf">
-                <div class="scan-corners"><b></b><b></b><b></b><b></b></div>
-                <div class="scan-slab"><i data-scan-strip></i></div>
-                <div class="scan-beam"></div>
-              </div>
-              <div class="scan-cap" data-scan-cap>Scanning&hellip;</div>
-              <div class="scan-result" data-scan-result></div>
-            </div>
-
             <div class="ps-tabbar"></div>
-            <button class="ps-fab" type="button" data-scan-fab tabindex="-1" title="Scan an item">
+            <div class="ps-fab">
               <svg viewBox="0 0 24 24" fill="none" stroke="#14161F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 8V6a2 2 0 0 1 2-2h2M17 4h2a2 2 0 0 1 2 2v2M21 16v2a2 2 0 0 1-2 2h-2M7 20H5a2 2 0 0 1-2-2v-2"/>
                 <circle cx="12" cy="12" r="3.2"/>
               </svg>
-            </button>
-
+            </div>
           </div>
         </div>
       </div>
@@ -742,20 +632,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
     </div>
   </div>
 </div>
-
-<!-- ─── TRUST STRIP ─── -->
-<section class="trust reveal" aria-label="What TrackCollectibles works with">
-  <div class="wrap">
-    <div class="trust-in">
-      <span class="trust-label">Built around the standards collectors already trust</span>
-      <div class="trust-row">
-        <span>CGC</span><span>CBCS</span><span>PGX</span><span>PSA</span><span>BGS</span><span>SGC</span>
-        <span class="trust-sep">·</span>
-        <span class="trust-ebay">Live pricing from eBay</span>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ─── HOW IT WORKS ─── -->
 <section class="section" id="how">
@@ -899,38 +775,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
   </div>
 </section>
 
-<!-- ─── FROM THE VAULT ─── -->
-<section class="section" id="vault-feature" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-rule reveal">
-      <h2 class="sec">From <span class="wonk">The Vault</span></h2>
-      <span class="lotno">№ 006 — THE JOURNAL</span>
-    </div>
-    <p class="lead reveal">Record sales, real attic finds, and plain-English guides to what your collection is worth.</p>
-    <div class="vfeat">
-      <a class="vfeat-card reveal" href="vault/most-expensive-comic-books-ever-sold.html">
-        <span class="vfeat-cat">Records · Comics</span>
-        <span class="vfeat-title">The Most Expensive Comic Books Ever Sold</span>
-        <span class="vfeat-dek">From a $9.12M attic Superman to a reported $15M Action Comics #1.</span>
-        <span class="vfeat-go">Read →</span>
-      </a>
-      <a class="vfeat-card reveal" href="vault/what-is-my-comic-book-worth.html">
-        <span class="vfeat-cat">Guide · Comics</span>
-        <span class="vfeat-title">What Is My Comic Book Worth?</span>
-        <span class="vfeat-dek">The five things that decide a comic's value — and how to get a real number.</span>
-        <span class="vfeat-go">Read →</span>
-      </a>
-      <a class="vfeat-card reveal" href="vault/most-expensive-trading-cards-ever-sold.html">
-        <span class="vfeat-cat">Records · Cards</span>
-        <span class="vfeat-title">The Most Expensive Trading Cards Ever Sold</span>
-        <span class="vfeat-dek">A $16.49M Pikachu just outsold every baseball card in history.</span>
-        <span class="vfeat-go">Read →</span>
-      </a>
-    </div>
-    <p class="reveal" style="margin-top:28px"><a class="btn btn-ghost" href="vault/index.html">Explore The Vault</a></p>
-  </div>
-</section>
-
 <!-- ─── WAITLIST ─── -->
 <section class="section" id="waitlist" style="padding-top:0">
   <div class="wrap">
@@ -981,14 +825,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
         <p>Very accurate on text-rich items like graded slabs (reads the label directly). For raw items it identifies them visually and cross-references databases. You always review and confirm the identification before saving, nothing gets added to your collection without your approval.</p>
       </details>
       <details>
-        <summary>How much does it cost?</summary>
-        <p>There's a free tier (20 items, 3 AI listings). Premium is $7.99/mo or $49.99/yr for unlimited items and 100 AI listings a month. A one-time <strong>Lifetime Founder</strong> plan ($129) is offered in a strictly limited first wave at launch. All billing runs through Apple.</p>
-      </details>
-      <details>
-        <summary>How is this different from a price guide?</summary>
-        <p>A printed guide is a snapshot from months ago. TrackCollectibles pulls what items are listed for on eBay right now and tracks your whole collection like a portfolio, so the value reflects today's market — not last year's book.</p>
-      </details>
-      <details>
         <summary>Is my collection data private?</summary>
         <p>Yes. Scan photos are processed and discarded — they're not stored permanently. Your collection data is yours, stored securely in your account. See our <a href="privacy.html">Privacy Policy</a> for full details.</p>
       </details>
@@ -1022,6 +858,5 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
   </div>
 </footer>
 
-<a class="sticky-cta" href="#waitlist" data-stickycta aria-hidden="true" tabindex="-1">Join the waitlist →</a>
 </body>
 </html>
